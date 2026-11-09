@@ -1,0 +1,12 @@
+# Install torch FIRST with: pip install torch --index-url https://download.pytorch.org/whl/cu118
+transformers==4.36.2
+numpy<2
+pandas
+scikit-learn
+xgboost
+pyfaidx
+einops
+shap
+matplotlib
+streamlit
+jupyter

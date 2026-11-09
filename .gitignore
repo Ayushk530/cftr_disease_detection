@@ -4,3 +4,20 @@
 report/
 .vscode/
 _pycache_/
+# Python environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Large genome reference
+cftr_app/data/chr7.fa
+cftr_app/data/chr7.fa.fai
+
+# Local datasets
+cleaned_datasets/
