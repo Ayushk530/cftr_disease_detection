@@ -163,10 +163,9 @@ class Predictor:
         return df[["pos", "ref", "alt", "label", "cosine_sim"]]
 
     # 4) SHAP over the 768 embedding dimensions (model-internal view)
+        # 4) SHAP-style contributions over the 768 embedding dimensions (XGBoost's built-in TreeSHAP)
     def shap_top(self, emb, k=10):
-        import shap
-        if self._explainer is None:
-            self._explainer = shap.TreeExplainer(self.clf)
-        sv = np.asarray(self._explainer.shap_values(emb)).reshape(-1)
+        contribs = self.clf.get_booster().predict(xgb.DMatrix(emb), pred_contribs=True)
+        sv = np.asarray(contribs)[0][:-1]          # last column is the bias term
         idx = np.argsort(-np.abs(sv))[:k]
-        return pd.DataFrame({"embedding_dim": idx, "shap_value": sv[idx]})
+        return pd.DataFrame({"embedding_dim": idx, "contribution": sv[idx]})
